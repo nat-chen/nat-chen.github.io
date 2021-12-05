@@ -1,20 +1,17 @@
 ---
-title: Nest 控制器
+title: Nest Controller
 categories:
 - NestJS
 feature_image: "https://picsum.photos/2560/600"
 ---
 
 ### 哲学
-
 目前大量优秀的 Node 库、帮助函数和工具，但最终没有有效地解决好主要问题：架构。Nest 提供一个开箱即用的应用程序架构，允许开发人员和团队创建高度可测试、可扩展、松耦合且易于维护的应用，深受 Angular 的架构影响。
 
 ### 概述
-
 控制台负责处理传入的请求和向客户端返回响应。
 
 ### 请求对象
-
 在处理器的签名出注入 `@Req()` 装饰器，以便访问请求对象。
 
 ```js
@@ -41,9 +38,6 @@ export class CatsController {
 | @Headers(name?: string)	| `req.headers / req.headers[name]` |
 | @Ip()	| `req.ip` |
 | @HostParam() | `req.hosts` |
-
-
-
 
 
 ### 基本实例
@@ -80,10 +74,3 @@ async create(@Body() createCatDto: CreateCatDto) {
 ```
 
 > `ValidationPipe` 过滤掉不应该被处理器接收的属性。在 `CreateCatDto` 中，白名单分别是 name, age 和 breed 属性
-
-
-
-
-
-
-
