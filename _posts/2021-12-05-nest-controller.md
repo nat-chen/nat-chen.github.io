@@ -11,8 +11,13 @@ feature_image: "https://picsum.photos/2560/600"
 ### 概述
 控制台负责处理传入的请求和向客户端返回响应。
 
+### 响应对象
+Nest 提供了两种方式封装请求
+* 标准（推荐）：当返回的内容为对象或数组时，将默认序列化为 JSON。当类型为基本时，原样返回。
+* 类库特有的：在函数签名处通过 @Res() 注入类库特定的响应对象，使用由该响应对象暴露的原生响应处理函数。（`response.status(200).send()`）
+
 ### 请求对象
-在处理器的签名出注入 `@Req()` 装饰器，以便访问请求对象。
+在处理器的签名处注入 `@Req()` 装饰器，以便访问请求对象。
 
 ```js
 @Controller('cat')
@@ -42,17 +47,27 @@ export class CatsController {
 
 ### 基本实例
 ```js
-@Controller({ host: 'admin.example.com' }) // 子域路由要求传入请求 HTTP 主机匹配特定的值
+@Controller({ host: ':account.example.com' }) // 子域路由要求传入请求 HTTP 主机匹配特定的值
 export class AdminController {
   @Get('ab*cd') // 路由通配符
   @HttpCode(204) // 状态码
+  @Header('Cache-Control', 'none') // 响应头部
   @Redirect('https://docs.nestjs.com', 302) // 重定向
   @Get(':id') // 路由参数
   findAll(@Param('id') id: string， @HostParam('account') account: string) {
     return 'This route uses a wildcard';
   }
+
+  getInfo(@HostParam('account') account: string) {
+    return account; // 获取主机名的动态参数
+  }
 }
 ```
+
+### 重定向
+`@Redirect()` 有两个参数：url 和 statusCode，两个都是可选。
+函数返回的值（`{url: string, statusCode: number}`）将覆盖 `@Rediret()` 传入的参数。
+
 
 ### 请求载荷（Reqeust payloads）
 请求的载荷内容通过 `@Body()` 获取。

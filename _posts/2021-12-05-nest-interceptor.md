@@ -26,7 +26,7 @@ feature_image: "https://picsum.photos/2560/600"
 
 这种方式意味着 `interceptor()` 高效地包装了请求和响应流。因此在最终的路由处理器执行前或后可以实现自定义逻辑。我们非常清楚在 `intercept()` 方法的 `handle()` 之前执行一些自定义的代码，但如何影响后续？`handle()` 返回一个 `Observable` 对象，我们可以使用强大的 RxJS 去操作响应。使用面向切面编程，路由处理器的调用（如 `handle()`）被称之为切入点（PointCut），表示在某个时间点上插入额外的逻辑。
 
-### 截取切面
+### 截取切面 （Aspect interception）
 ```js
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';

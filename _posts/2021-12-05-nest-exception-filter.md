@@ -16,7 +16,7 @@ Nest 内置了异常层用于处理整个应用程序中所有抛出的异常。
 }
 ```
 
-> 全局异常过滤器部分支持 `http-errors` 库，任何抛出的异常包含 `statusCode` 和 `mesage` 属性将被适当的返回响应（而非默认未被识别的异常 `InternalServerErrorException`）
+> 全局异常过滤器部分支持 `http-errors` 库，任何抛出的异常包含 `statusCode` 和 `mesage` 属性将被适当的返回响应（而非未被识别的默认异常 `InternalServerErrorException`）
 
 ### 抛出标准异常
 `HttpExcepiton` 构造器包含两个必填的参数：
@@ -105,6 +105,7 @@ export class HttpExcepionFilter implements ExceptionFilter {
 尽可能使用类而非实例。Nest 在整个模块中重复使用一个类的实例，减少了内存使用。另外将创建实例的交给框架及开启了依赖注入。
 
 ```js
+// 方法
 @Post()
 @UseFilters(HttpExceptionFilter) // 类
 // @UseFilters(new HttpExceptionFilter()) 实例
@@ -112,14 +113,18 @@ async create(@Body() createCatDto: CreateCatDto) {
   throw new ForbiddenException();
 }
 
-// 创建全局的过滤器
+// 类
+@UseFilter(new HttpExceptionFilter())
+export class CatsController {}
+
+// 全局
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilter(new HttpExceptionFilter());
 }
 ```
 
-全局过滤器可以在整个应用中使用，针对每个控制器和路由处理器。在依赖注入方面，全局过滤器在任何模块的外部注册不能注入依赖。为了解决问题，参照如下代码
+全局过滤器可以在整个应用中使用，针对每个控制器和路由处理器。在依赖注入方面，全局过滤器因在所有模块的外部注册不能注入依赖。为了解决问题，参照如下代码
 ```js
 // app.module.ts
 @Module({

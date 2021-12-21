@@ -6,7 +6,7 @@ feature_image: "https://picsum.photos/2560/600"
 ---
 
 ### 概述
-中间件是在路由处理器之前调用的函数。它可以访问 `request` 和 `response` 对象，以及应用程序请求响应周期中的 `next()` 中间件函数。
+中间件是在路由处理器之前调用的函数。它可以访问 `request` 和 `response` 对象，以及应用程序请求-响应周期中的 `next()` 中间件函数。
 
 Nest 中间件默认等同于 Express 中间件。以下为执行的任务：
 * 执行任何代码
@@ -15,7 +15,7 @@ Nest 中间件默认等同于 Express 中间件。以下为执行的任务：
 * 调用堆栈中的下一个中间件函数
 * 如果当前中间函数没有终止请求-响应周期，它必须调用 `next()` 传递给下一个中间件函数，否则，请求将被挂起
 
-自定义中间件可以是一个具有 `@Injectable` 装饰器的函数或类，应实现 `NestMiddleware` 接口。
+自定义中间件可以是一个函数或是具有 `@Injectable` 装饰器的函数，应实现 `NestMiddleware` 接口。
 
 ```js
 @Injectable()
@@ -39,7 +39,7 @@ export class LoggerMiddleware implements NestMiddleware {
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(LoggerMiddleware)
+      .apply(LoggerMiddleware) // loggerMiddleware 绑定特定的路由
       .forRoutes('cats');
       // .forRoutes({ path: 'cats', method: RequestMethod.GET })
       // forRoutes({ path: 'ab*cd', method: RequestMethod.ALL });

@@ -144,7 +144,7 @@ ENTRYPOINT 指令可让容器以应用程序或者服务的形式运行。ENTRYP
 * WORKDIR 设置 RUN、CMD、ENTRYPOINT、ADD、COPY 工作目录
 * USER 设置 RUN、CMD、ENTRYPOINT 运行容器时运行用户
 * OUTBUILD 设置镜像触发器
-* LABLE 添加元数据，建议放在一个 LABLE 指令中执行
+* LABEL 添加元数据，建议放在一个 LABEL 指令中执行
 * ARG 指定默认参数
 * STOPSIGNAL 设置停止容器时发送什么系统调用信号
 

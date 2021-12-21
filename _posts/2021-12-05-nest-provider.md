@@ -20,7 +20,7 @@ Nest 是建立在强大的设计模式, 通常称为依赖注入。
 依赖是服务或对象用于给类提供若干功能。依赖注入是一种设计模式用于类从外部资源获取而非自己创建依赖。（摘抄自 Angular 文档）
 
 ### 生命周期（Scopes）
-Provider 通常具有与应用程序生命周期同步的生命周期（scope 作用域）。在启动应用程序时，必须解析每个依赖项，因此必须实例化每个提供程序。同样，当应用程序关闭时，每个 provider 都将被销毁。但是，有一些方法可以改变 provider 生命周期的请求范围（request-scoped）。
+Provider 通常具有与应用程序生命周期同步的生命周期（scope 作用域）。在启动应用程序时，必须解析每个依赖项，因此必须实例化每个 provider。同样，当应用程序关闭时，每个 provider 都将被销毁。但是，有一些方法可以改变 provider 生命周期的请求范围（request-scoped）。
 
 ### 自定义 providers
 Nest 有一个内置的**控制反转**（"IoC"）容器，可以解决 providers 之间的关系。 此功能是上述依赖注入功能的基础。
@@ -31,6 +31,7 @@ Nest 有一个内置的**控制反转**（"IoC"）容器，可以解决 provider
 ```js
 @Injectable()
 export class HttpService<T> {
+  // 基于构造器注入的方式
   constructor(@Optional() @Inject('HTTP_OPTIONS') private httpClient: T) {}
 }
 ```
